@@ -3,7 +3,7 @@
 Creating a custom monitoring script can be an exciting and rewarding project. Here's a general outline to get you started on developing your own monitoring tool:
 
 - Choose Your Programming Language: Select a programming language that you're comfortable with and that is suitable for system monitoring tasks. 
-Python will be my choice due to simplicity and extensive libraries.
+Bash will be my choice due to straightforwardness and quicker implementation options.
 
 - Define Metrics to Monitor: Decide on the metrics you want to monitor. 
 I will go with  CPU usage, memory usage, disk space.
