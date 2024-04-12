@@ -23,6 +23,3 @@ Generate Weekly Reports: Develop a feature to generate weekly reports summarizin
 
 - Testing and Refinement: Test your monitoring script thoroughly to ensure it behaves as expected. Make any necessary refinements or optimizations based on testing results and feedback.
 
-Optionnal : 
-
-- Create an Interactive Interface: If desired, implement an interactive interface using a library like curses or a GUI toolkit like Tkinter or PyQt. This interface can display real-time data and provide options for interacting with the monitoring system.
