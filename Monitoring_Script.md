@@ -13,6 +13,8 @@ Provide file name: metrics.csv
 Combine directory path and file name: /home/user/data/metrics.csv
 You can use this complete path (/home/user/data/metrics.csv) in your script to specify where the CSV file should be saved. Replace /home/user/data with the actual directory path you want to use.
 
+Make sure also to replace your_email@example.com with your actual email address, and adjust other paths and settings as needed. Additionally, ensure that the mail command is properly configured on your system to send emails.
+
 ````
 #!/bin/bash
 
