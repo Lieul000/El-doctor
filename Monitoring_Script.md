@@ -43,11 +43,36 @@ echo "  Hostname: $(hostname | cut -f 1 -d.)" >> "$CSV_FILE"
 echo "  Architecture: $(uname -m)" >> "$CSV_FILE"
 echo "  Kernel: $(uname -r)" >> "$CSV_FILE"
 
+# Services
+# Append running services to CSV file
+echo "" >> "$CSV_FILE"
+echo "## Services" >> "$CSV_FILE"
+sudo systemctl list-units --type=service | grep "running" | sed -e 's/loaded.*running.*/running/g' -e 's/.service//g' >> "$CSV_FILE"
+
 # Internet Connectivity
 # Check internet connectivity and append status to CSV file
 echo "" >> "$CSV_FILE"
 echo "## Internet Connectivity" >> "$CSV_FILE"
 ping -c 1 google.com &> /dev/null && echo "  Status: Connected" || echo "  Status: Disconnected" >> "$CSV_FILE"
+
+# IP Addresses
+# Append public and private IP addresses to CSV file
+echo "" >> "$CSV_FILE"
+echo "## IP Addresses" >> "$CSV_FILE"
+echo "  Public IP: $(curl -s ipecho.net/plain;echo)" >> "$CSV_FILE"
+echo "  Private IP: $(/sbin/ip -o -4 addr list enp0s8 | awk '{print $4}' | cut -d/ -f1)" >> "$CSV_FILE"
+
+# DNS Server
+# Append DNS server to CSV file
+echo "" >> "$CSV_FILE"
+echo "## DNS Server" >> "$CSV_FILE"
+cat /etc/resolv.conf | grep nameserver | awk '{print $2}' >> "$CSV_FILE"
+
+# Network Services
+# Append network services to CSV file
+echo "" >> "$CSV_FILE"
+echo "## Network Services" >> "$CSV_FILE"
+sudo ss -tlnp | tail -n+2 | tr -s ' ' | cut -d ' ' -f 1,4,7 | column -ts ' ' >> "$CSV_FILE"
 
 # CPU Usage
 # Check CPU usage and append to CSV file
@@ -81,6 +106,12 @@ storage_usage=$(df --output=pcent / | tail -n 1 | sed 's/%//')
 if [ $storage_usage -gt 80 ]; then
     send_notification "Storage Usage Alert" "Storage usage is above 80%."
 fi
+
+# Disk I/O
+# Append disk I/O to CSV file
+echo "" >> "$CSV_FILE"
+echo "## Disk I/O" >> "$CSV_FILE"
+iostat -d, >> "$CSV_FILE"
 
 # Send weekly report via email
 # If it's Sunday, send the weekly server monitoring report via email
